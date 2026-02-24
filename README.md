@@ -7,3 +7,19 @@
 1. Клонируйте репозиторий:
    ```bash
    git clone [https://github.com/frontenddeveloper-coder/Zametki.git](https://github.com/frontenddeveloper-coder/Zametki.git)
+
+2. Создайте и активируйте виртуальное окружение:
+   ```bash
+   python -m venv venv
+   # Для Windows:
+   venv\Scripts\activate
+
+3. Установите зависимости:
+   ```bash
+   pip install -r requirements.txt
+
+4. Создайте файл .env на основе .env.example и впишите свои настройки.
+5. Запустите миграции и сервер:
+   ```bash
+   python manage.py migrate
+   python manage.py runserver
