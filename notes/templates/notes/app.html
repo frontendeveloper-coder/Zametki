@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Заметки</title>
+    <link rel="stylesheet" href="{% static 'notes/app.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+    
+    <header>
+        <div class="header-logo">
+            <h1 class="logo">Просто Заметки</h1>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'register' %}">Войти</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="layout">
+
+        <aside class="sidebar">
+            <input type="text" id="searchInput" placeholder="Поиск..." class="search-input" />
+            <button id="btn-new" class="new">Добавить</button>
+
+            <div id="note-list">
+                {% for n in notes %}
+                <div class="item{% if active and active.id == n.id %} active{% endif %}" data-id="{{ n.id }}">
+                    {% if n.pinned %}⭐ {% endif %} {{ n.title|default:"Без названия" }}
+                </div>
+                {% endfor %}
+            </div>
+        </aside>
+
+        <main class="editor">
+
+            <div class="editor-header">
+                {{ form.title }}
+
+                <button id="btn-preview" class="btn-preview">👁 Просмотр</button>
+            </div>
+
+            <!-- EDIT: только тело заметки в форме -->
+            <form id="note-form" method="post">
+                {% csrf_token %}
+                {{ form.text }}
+
+                <div class="actions">
+                    <button type="button" id="btn-pin">⭐ Закрепить</button>
+                    <button type="button" id="btn-delete">Удалить</button>
+                </div>
+            </form>
+
+            <!-- PREVIEW -->
+            <div id="preview" class="preview hidden"></div>
+
+        </main>
+    </div>
+
+    <script src="{% static 'notes/app.js' %}"></script>
+</body>
+
+</html>
